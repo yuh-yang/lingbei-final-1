@@ -136,9 +136,14 @@ def draw_line(request):
     return render(request,'Line.html', {'places':places,'things':things,'username':request.user.username,'hello':sayhello(),'urls':urls})
 
 def info_flow(request):
-    iflow = Tweet.objects.exclude(username= request.user.username).order_by('date')[:30] #每个地点搜索五条
-    avaters = IDInfo.objects.filter(username=request.user.username)
-    return render(request,'InfoFlow.html', {'flows':iflow,'username':request.user.username,'hello':sayhello(),'avaters':avaters})
+    iflow = Tweet.objects.exclude(username= request.user.username).order_by('date') #每个地点搜索五条
+    urls = []
+    rurl_head = "/static/pic/picOfLine/"
+    rurl_foot = ".jpg"
+    for i in iflow:
+        i.url = rurl_head+i.place+rurl_foot
+    iflow = iflow[:30]
+    return render(request,'InfoFlow.html', {'flows':iflow,'username':request.user.username,'hello':sayhello(),'urls':urls})
 
 def sayhello():
     global hello

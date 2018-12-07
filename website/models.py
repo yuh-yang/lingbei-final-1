@@ -9,6 +9,7 @@ class Tweet(models.Model):
     place = models.TextField()
     thing = models.TextField()
     thought = models.TextField()
+    url = models.TextField(default=" ")
 
     def __str__(self):
         return self.username, self.date, self.time, self.place,self.thing,self.thought

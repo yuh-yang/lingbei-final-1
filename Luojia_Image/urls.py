@@ -26,12 +26,12 @@ from website import views as website_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/',website_views.user_login,), #登陆页
+    path('login/',website_views.user_login, name='login'), #登陆页
     path('',website_views.index,),
     path('map/', website_views.map, name='map'), #地图主页
     path('line/', website_views.draw_line, name="line"), #抽象时间线
     path('timeline/',  website_views.make_historyline, name="make_timeline",), #历史记录
     path('infoflow/', website_views.info_flow, name="InfoFlow",), #信息流
     path('likes/', include('likes.urls')),
-    url(r'^comments/', include('django_comments.urls')),
+    url(r'^/comments/', include('django_comments.urls')),
 ]
