@@ -10,6 +10,7 @@
     <link href="{% static "css/styleOfframe.css" %}" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
+{% load comments %}
 {% load likes_tags %}
 <!--顶部导航栏-->
 <div class =  "navbar-fixed">
@@ -56,10 +57,29 @@
                 <div class="like" onclick="likeChange(this, '{% get_content_type flow %}', {{ flow.pk }})">
                     <span class="glyphicon glyphicon-thumbs-up {% get_like_status flow %}"></span>
                     <span class="liked-num">{% get_like_count flow %}</span>
-                    <span>喜欢</span>
+                    <span>喜欢</span></div>
                 <a href="#">点赞</a>
                 <a href="#">评论</a>
-            </div>
+
+                <div>{% if user.is_authenticated %}
+    {% get_comment_form for flow as form %}
+    <form action="{% comment_form_target %}" method="POST">
+    {% csrf_token %}
+    {{ form.comment }}
+    {{ form.honeypot }}
+    {{ form.content_type }}
+    {{ form.object_pk }}
+    {{ form.timestamp }}
+    {{ form.security_hash }}
+    <input type="hidden" name="next" value="{% url 'InfoFlow' %}" />
+    <input type="submit" value="提交评论" id="id_submit" />
+    </form>
+{% else %}
+    <p>请先<a href="{% url 'auth_login' %}">登录</a>后方可评论.</p>
+{% endif %}</div>
+                <div>{% render_comment_list for flow %}</div>
+
+</div>
         </div>
     </div>
 </div>
