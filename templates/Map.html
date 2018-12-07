@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    <title>时空珞珈——记录</title>
+    {% load static %}
+
+    <!--js-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
+
+    <!-- CSS  -->
+    <link rel="stylesheet" href="{% static "css/styleOfMap.css" %}">
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Raleway'>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{% static "css/materialize.min.css" %}" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="{% static "css/styleOfframe.css" %}" type="text/css" rel="stylesheet" media="screen,projection">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+{% load static %}
+<!--顶部导航栏-->
+<div class =  "navbar-fixed">
+    <nav class="" role="navigation" style = "background-color: #efefef;">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="#" class="brand-logo" style = "width:10%;"><img src = "{% static "pic/Logo1.png" %}" style = "height:80%;width:80%;"></a>
+            <ul class="right hide-on-med-and-down">
+                <li><img class = "item" src = "{% static "pic/picOfMap/home.png" %}" id = "home" style = "display:inline-block;"></li>
+                <li><a href = "/map/" style="color:#243B2B">记录</a></li>
+                <li><img class = "item" src = "{% static "pic/picOfMap/Line.png" %}" id = "Line"></li>
+                <li><a href = "/line/" style="color:#243B2B">印记</a></li>
+                <li><img class = "item" src = "{% static "pic/picOfMap/light.png" %}" id = "Time-line"></li>
+                <li><a href = "/timeline/" style="color:#243B2B">流逝</a></li>
+                <li><img class = "item" src = "{% static "pic/picOfMap/info.png" %}" id = "info"></li>
+                <li><a href = "/infoflow/" style="color:#243B2B">发现</a></li>
+            </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+                <li><a href = "/map/">记录</a></li>
+                <li><a href = "/line/">印记</a></li>
+                <li><a href = "/timeline/">流逝</a></li>
+                <li><a href = "/infoflow/">发现</a></li>
+            </ul>
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+</div>
+
+
+<!-- Modal Trigger -->
+<a class="waves-effect waves-light btn" href="#modal1" style = "display:inline-block;position: absolute;left:45%;background-color: #243B2B;">点击查看引导</a>
+
+<!--地图-->
+<div>
+    {% csrf_token %}
+    <div style = "position: relative;">
+        <img src = "{% static "pic/picOfMap/map.png" %}" id = "background">
+
+        <!--所有浮动图标-->
+        <img src = "{% static "pic/icon/firs.png" %}" class = "icon" id = "一食堂" data-toggle="modal" data-target="#myModal0"  name = "1" onclick="getplace(this.id);getlist(this.id);" >
+        <img src = "{% static "pic/icon/sec.png" %}" class = "icon" id = "二食堂" data-toggle="modal" data-target="#myModal1" name = "2" onclick="getplace(this.id);getlist(this.id);">
+        <img src = "{% static "pic/icon/xin-playground.png" %}" class = "icon" id = "信操" data-toggle="modal" data-target="#myModal2" name = "4" onclick="getplace(this.id);getlist(this.id);">
+        <img src = "{% static "pic/icon/basketball.png" %}" class = "icon" id = "信部篮球场" data-toggle="modal" data-target="#myModal3" name = "5" onclick="getplace(this.id);getlist(this.id);">
+
+        <img src = "{% static "pic/icon/xin-playground.png" %}" class = "icon" id = "网安操场" data-toggle="modal" data-target="#myModal4" name = "6" onclick="getplace(this.id);getlist(this.id);">
+        <img src = "{% static "pic/icon/wangan.png" %}" class = "icon" id = "网安教学楼" data-toggle="modal" data-target="#myModal5" name = "7" onclick="getplace(this.id);getlist(this.id);">
+        <img src = "{% static "pic/icon/qinglou.png" %}" class = "icon" id = "青楼" data-toggle="modal" data-target="#myModal6" name = "8" onclick="getplace(this.id);getlist(this.id);">
+
+        <img src = "{% static "pic/icon/deren.png" %}" class = "icon" id = "德仁" data-toggle="modal" data-target="#myModal7" name = "9" onclick="getplace(this.id);getlist(this.id);">
+        <img src = "{% static "pic/icon/xinghuyuan.png" %}" class = "icon" id = "星湖园" data-toggle="modal" data-target="#myModal8" name = "10" onclick="getplace(this.id);getlist(this.id);">
+        <img src = "{% static "pic/icon/library.png" %}" class = "icon" id = "图书馆" data-toggle="modal" data-target="#myModal9" name = "11" onclick="getplace(this.id);getlist(this.id);">
+        <img src = "{% static "pic/icon/lake.png" %}" class = "icon" id = "星湖"  data-toggle="modal" data-target="#myModal10" name = "12" onclick="getplace(this.id);getlist(this.id);">
+        <img src = "{% static "pic/icon/youyi.png" %}" class = "icon" id = "友谊广场" data-toggle="modal" data-target="#myModal11" name = "13" onclick="getplace(this.id);getlist(this.id);">
+        <img src = "{% static "pic/icon/pool.png" %}" class = "icon" id = "游泳池" data-toggle="modal" data-target="#myModal12" name = "15" onclick="getlist(this.name);" >
+    </div>
+
+</div>
+
+<!--提交成功提示-->
+{% if messages %}
+<div class="modal fade" id="myModal76" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class = "modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <center><h4 class="modal-title">消息</h4></center>
+            </div>
+            <div class = "modal-body">
+                {% for message in messages %}
+                <center><p>{{message }}</p></center>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+            {% endif %}
+
+<!--此为模态框-引导-->
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h4>欢迎体验时空珞珈</h4>
+        <p>点击地标，记录您在哪、做什么，创建您自己的个性化体验</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">关闭</a>
+    </div>
+</div>
+
+
+
+<!--此为模态框-添加页面-->
+{% for i in a %}
+    <div class="place modal" id="myModal{{ i.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style = "position: absolute;max-height: 90%;">
+
+        <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style = "background-color: transparent;border:0;font-size:1.3rem;"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">记录</h4>
+                <div id = "place">
+                    <p>今天的日期是{{ date }}</p>
+                    <p>你在 <span id="id" >{{ i.place }}</span></p>
+                </div>
+
+        <script type="text/javascript">
+            function getplace(name) {
+                var data = {a:1};
+                data.a = name;
+                var place = new Vue({
+                    el: '#place',
+                    data: data
+                })
+            }
+        </script>
+
+        <form action="/map/" method="post">
+            {% csrf_token %}
+            <div class = "form-group">
+                <label style = "display: block"><!--地点-->
+                    <select class = "selectpicker show-tick form-control" name="place">
+                        <option id="place" value = {{ i.place }}>{{ i.place }}</option>
+                    </select>
+                </label>
+
+                <label style = "display: block">现在的时间是（自动获取）<!--时间框-->
+                <select class = "selectpicker show-tick form-control select" name="time">
+                    <option id="time" value = {{ time }}>{{ time }}</option>
+                </select>
+            </label>
+                <label class = "control-label" style = "display: block">你在做什么？（请选择）</label>
+                <label style = "display: block"><!--事件选择框-->
+                    <select class = "selectpicker show-tick form-control" name="thing" style = "z-index: 1;">
+                        {% for j in i.option %}
+                        <option id="thing" value = {{ j }} style = "z-index: 1;" > {{ j }} </option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <p>
+                <center><label><!--想法输入框-->
+                    <input name="thought" type="text" placeholder="与大家分享你在想什么" required>
+                </label></center>
+                </p>
+                <center><button style = "margin:5%;" class = "btn btn-default" type="submit">分享</button></center>
+
+                <!--提交成功后弹出成功窗口？？？？-->
+            </div>
+        </form>
+        </div>
+</div>
+
+{% endfor %}
+
+
+
+
+
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="{% static 'js/materialize.js' %}"></script>
+
+<script>
+    (function($){
+        <!--初始化侧边栏及时差效果初始化-->
+        $(function(){
+
+            $('.button-collapse').sideNav();
+            $('.parallax').parallax();
+
+        }); // end of document ready
+    })(jQuery); // end of jQuery name space
+    <!--模态初始化-->
+    $(document).ready(function(){
+        // .modal-trigger类所在的a标签的href属性必须制定模态框的id才能被触发。
+        $('.modal').modal({
+            dismissible: false, // 点击模态外面模态消失关闭
+            opacity: .5, // 相对于背景的不透明度
+            in_duration: 300, // 显示特效的时间
+            out_duration: 200, // 消失特效时间
+            starting_top: '4%', // 启动时的样式属性
+            ending_top: '10%', // 结束时的样式属性
+
+        });
+        $('.open').on('click', function() {
+            $('#modal1').modal('open');
+        });
+        $('.close').on('click', function() {
+            $('#modal2').modal('close');
+        });
+                $('#modal1').modal('open');
+
+        <!--初始化下拉菜单-->
+        $(document).ready(function() {
+
+            $('select').material_select();
+
+        });
+    });
+</script>
+
+<!--底部栏-->
+<footer class="page-footer" style = "float: bottom;position: relative;background:#243B2B;">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">时空珞珈</h5>
+                <p class="grey-text text-lighten-4">关于“珞珈印象”这么一个主题，我们思考了很久：在视觉上经典的绿瓦和牌坊，象征中不变的樱花和东湖水之外，珞珈给予我们的、我们留在珞珈的，究竟是什么？
+                    这一次的网页设计就代表了我们的答案——我们在珞珈的时光</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Made by <h5 style = "display: inline-block;">编程哲学</h5>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
+

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>{% load static %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    <title>frame</title>
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{% static "css/materialize.min.css" %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="{% static "css/styleOfframe.css" %}" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+{% load likes_tags %}
+<!--顶部导航栏-->
+<div class =  "navbar-fixed">
+    <nav class="blue" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="#" class="brand-logo">Logo</a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="#">记录</a></li>
+                <li><a href="#">印记</a></li>
+                <li><a href="#">流逝</a></li>
+                <li><a href="#">发现</a></li>
+            </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+                <li><a href="#">记录</a></li>
+                <li><a href="#">印记</a></li>
+                <li><a href="#">流逝</a></li>
+                <li><a href="#">发现</a></li>
+            </ul>
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+</div>
+
+
+<div class = "card-container">
+<!--主体内容-->
+    {% for flow in flows %}
+<div class="col s12 m6 card z-depth-4">
+    <div class = "user">
+        <img src = "../website/static/pic/头像.jpg" class = "touxiang circle">
+        <h5 style = "display:inline-block;"><a>小王</a></h5>
+    </div>
+
+    <div class="card">
+        <div class="card-image">
+            <img class = "user-img" src="../website/static/pic/picOfLine/图书馆.jpg">
+        </div>
+        <div class="card-stacked">
+            <div class="card-content">
+                <p>{{ flow.thought }}</p>
+            </div>
+            <div class="card-action">
+                <div class="like" onclick="likeChange(this, '{% get_content_type flow %}', {{ flow.pk }})">
+                    <span class="glyphicon glyphicon-thumbs-up {% get_like_status flow %}"></span>
+                    <span class="liked-num">{% get_like_count flow %}</span>
+                    <span>喜欢</span>
+                <a href="#">点赞</a>
+                <a href="#">评论</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>
+
+
+
+
+
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="{% static "js/materialize.js" %}"></script>
+<script>
+    (function($){
+        $(function(){
+
+            $('.button-collapse').sideNav();
+            $('.parallax').parallax();
+
+        }); // end of document ready
+    })(jQuery); // end of jQuery name space
+    <!--modal-->
+    $(document).ready(function(){
+        // .modal-trigger类所在的a标签的href属性必须制定模态框的id才能被触发。
+        $('.modal').modal({
+            dismissible: false, // 点击模态外面模态消失关闭
+            opacity: .5, // 相对于背景的不透明度
+            in_duration: 300, // 显示特效的时间
+            out_duration: 200, // 消失特效时间
+            starting_top: '4%', // 启动时的样式属性
+            ending_top: '10%', // 结束时的样式属性
+
+        });
+        $('.open').on('click', function() {
+            $('#modal1').modal('open');
+        });
+        $('.close').on('click', function() {
+            $('#modal2').modal('close');
+        });
+
+
+        $(document).ready(function() {
+
+            $('select').material_select();
+
+        });
+
+
+        $(document).ready(function(){
+            $('.carousel').carousel();
+        });
+    });
+            function likeChange(obj, content_type, object_id){
+            var is_like = obj.getElementsByClassName('active').length === 0;
+            $.ajax({
+                url: "{% url 'like_change' %}",
+                type: 'GET',
+                data: {
+                    content_type: content_type,
+                    object_id: object_id,
+                    is_like: is_like
+                },
+                cache: false,
+                success: function(data){
+                    console.log(data);
+                    if(data['status']==='SUCCESS'){
+                        // 更新点赞状态
+                        var element = $(obj.getElementsByClassName('glyphicon'));
+                        if(is_like){
+                            element.addClass('active');
+                        }else{
+                            element.removeClass('active');
+                        }
+                        // 更新点赞数量
+                        var liked_num = $(obj.getElementsByClassName('liked-num'));
+                        liked_num.text(data['liked_num']);
+                    }else{
+                        alert(data['message']);
+                    }
+                },
+                error: function(xhr){
+                    console.log(xhr)
+                }
+            });
+        }
+</script>
+
+
+
+
+</body>
+
+<!--底部栏-->
+<footer class="page-footer" style = "float: bottom;position: relative;background:#243B2B;">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">时空珞珈</h5>
+                <p class="grey-text text-lighten-4">关于“珞珈印象”这么一个主题，我们思考了很久：在视觉上经典的绿瓦和牌坊，象征中不变的樱花和东湖水之外，珞珈给予我们的、我们留在珞珈的，究竟是什么？
+                    这一次的网页设计就代表了我们的答案——我们在珞珈的时光</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Made by <h5 style = "display: inline-block;">编程哲学</h5>
+        </div>
+    </div>
+</footer>
+
+</html>

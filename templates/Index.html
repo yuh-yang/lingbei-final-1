@@ -1,0 +1,123 @@
+<!DOCTYPE>
+<html>
+<head>
+	{% load static %}
+	<meta charset="utf-8">
+	<title>时空珞珈——登陆</title>
+
+	<!-- CSS  -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+	<link rel="stylesheet" href="{% static "css/styleOfIndex.css"%}">
+
+	<style>
+		input {
+			color:white;
+		}
+		body {
+			overflow-y: hidden;
+		}
+	</style>
+
+</head>
+
+<body>
+
+
+
+<div id = "log" style = "display: block;">
+	<form class = "form-horizontal" method="post" style = "display: inline-block">
+		{% csrf_token %}
+		<div class = "form-group">
+			<label class = "control-label" style = "color: white;">用户名</label>
+			<input type = "text" class = "col-md-5 form-control" id = "username" name="username" autocomplete="off">
+		</div>
+
+		<div class = "form-group">
+			<label class = "control-label" style = "color: white;">密码</label>
+			<input type = "password" class = "col-md-5 form-control" id = "password" name="password" autocomplete="off">
+		</div>
+
+		<div class = "form-group">
+			<button type = "submit" class = "btn offset-s3 form-control" id = "submit-btn">登陆</button>
+			<a href="#modal1" id  = "log-a">注册</a>
+		</div>
+	</form>
+</div>
+
+
+<div id="modal1" class="modal" style = "width: 30%;">
+	<center>
+	<form class = "form-horizontal" method="post" style = "display: inline-block">
+		<div class = "form-group mod" hidden>
+			<input type = "text" class = "form-control col-" id = "form_name">
+		</div>
+		<div class="modal-content">
+			<div class = "row">
+		{% csrf_token %}
+		<div class = "form-group mod">
+			<label class = "control-label">用户名</label>
+			<input type = "text" class = "form-control" id = "username1" name="username" autocomplete="off" style = "color:black;">
+		</div>
+
+		<div class = "form-group mod">
+			<label class = "control-label">密码</label>
+			<input type = "password" class = "form-control" id = "password1" name="password" autocomplete="off" style = "color:black;">
+		</div>
+		<div class = "form-group mod">
+			<label class = "control-label">确认密码</label>
+			<input type = "password" class = "form-control" id = "password_confirm" name="password" autocomplete="off" style = "color:black;">
+		</div>
+			</div>
+		</div>
+
+		<div class="modal-footer">
+		<div class = "form-group mod">
+			<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" style = "float: right;">关闭</a>
+			<button type = "submit" class = "btn form-control" id = "submit-btn1" style = "inline-block;">提交</button>
+
+		</div>
+		</div>
+	</form>
+	</center>
+</div>
+
+
+
+<div class = "pic">
+	<img src = "{% static "pic/picOfIndex/back.png"%}" id = "back" class = "img-responsive"  style = "display:block; width:100%; max-width:100%; height:100%;">
+	<img src = "{% static "pic/picOfIndex/cloud.png"%}" id = "cloud">
+	<img src = "{% static "pic/picOfIndex/cloud.png"%}" id = "cloud2">
+	<img src = "{% static "pic/picOfIndex/p1.png"%}" id = "p1">
+	<img src = "{% static "pic/picOfIndex/p2.png"%}" id = "p2">
+	<img src = "{% static "pic/picOfIndex/line.png"%}" id = "line">
+	<img src = "{% static "pic/picOfIndex/l.png"%}" id = "l">
+</div>
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="{% static 'js/materialize.js' %}"></script>
+<script type="text/javascript">
+    <!--模态初始化-->
+    $(document).ready(function() {
+        // .modal-trigger类所在的a标签的href属性必须制定模态框的id才能被触发。
+        $('.modal').modal({
+            dismissible: false, // 点击模态外面模态消失关闭
+            opacity: .5, // 相对于背景的不透明度
+            in_duration: 300, // 显示特效的时间
+            out_duration: 200, // 消失特效时间
+            starting_top: '4%', // 启动时的样式属性
+            ending_top: '10%', // 结束时的样式属性
+
+        });
+        $('.open').on('click', function () {
+            $('#modal1').modal('open');
+        });
+        $('.close').on('click', function () {
+            $('#modal2').modal('close');
+        });
+    })
+</script>
+
+</body>
+
+</html>

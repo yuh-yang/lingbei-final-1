@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    <title>时空珞珈——流逝</title>
+    {% load static %}
+
+    <!--js-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
+
+    <!-- CSS  -->
+    <link rel="stylesheet" href="{% static "css/styleOfMap.css" %}">
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Raleway'>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{% static "css/materialize.min.css" %}" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="{% static "css/styleOfframe.css" %}" type="text/css" rel="stylesheet" media="screen,projection">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+{% load static %}
+<!--顶部导航栏-->
+<div class =  "navbar-fixed">
+    <nav class="" role="navigation" style = "background-color: #efefef;">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="#" class="brand-logo" style = "width:10%;"><img src = "{% static "pic/Logo1.png" %}" style = "height:80%;width:80%;"></a>
+            <ul class="right hide-on-med-and-down">
+                <li><img class = "item" src = "{% static "pic/picOfMap/home.png" %}" id = "home" style = "display:inline-block;"></li>
+                <li><a href = "/map/" style="color:#243B2B">记录</a></li>
+                <li><img class = "item" src = "{% static "pic/picOfMap/Line.png" %}" id = "Line"></li>
+                <li><a href = "/line/" style="color:#243B2B">印记</a></li>
+                <li><img class = "item" src = "{% static "pic/picOfMap/light.png" %}" id = "Time-line"></li>
+                <li><a href = "/timeline/" style="color:#243B2B">流逝</a></li>
+                <li><img class = "item" src = "{% static "pic/picOfMap/info.png" %}" id = "info"></li>
+                <li><a href = "/infoflow/" style="color:#243B2B">发现</a></li>
+            </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+                <li><a href = "/map/">记录</a></li>
+                <li><a href = "/line/">印记</a></li>
+                <li><a href = "/timeline/">流逝</a></li>
+                <li><a href = "/infoflow/">发现</a></li>
+            </ul>
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+</div>
+
+
+<div class="carousel" style = "height: 700px;">
+    {% for i in today %}
+    <a class="carousel-item" href="#">
+            <div class="modal-content">
+            <p  class=""  style ="font-size:1rem; width: 15%;display: inline-block;" id = "seven">{{ i.date }}&nbsp;{{ i.time }}</p>
+        </div>
+        <div class="modal-content">
+            <p  class=""  style ="font-size:1rem; width: 15%;display: inline-block;" id = "seven">在{{ i.place }}&nbsp;{{ i.thing }}</p>
+        </div>
+            <div class="modal-content">
+            <p  class=""  style ="font-size:1rem; width: 15%;display: inline-block;" id = "seven">"{{ i.thought }}"</p>
+        </div>
+    </a>
+    {% endfor %}    {% for i in yesterday %}
+    <a class="carousel-item" href="#">
+            <div class="modal-content">
+            <p  class=""  style ="font-size:1rem; width: 15%;display: inline-block;" id = "seven">{{ i.date }}&nbsp;{{ i.time }}</p>
+        </div>
+        <div class="modal-content">
+            <p  class=""  style ="font-size:1rem; width: 15%;display: inline-block;" id = "seven">在{{ i.place }}&nbsp;{{ i.thing }}</p>
+        </div>
+            <div class="modal-content">
+            <p  class=""  style ="font-size:1rem; width: 15%;display: inline-block;" id = "seven">"{{ i.thought }}"</p>
+        </div>
+    </a>
+    {% endfor %}
+    {% for i in beforeyesterday %}
+    <a class="carousel-item" href="#">
+            <div class="modal-content">
+            <p  class=""  style ="font-size:1rem; width: 15%;display: inline-block;" id = "seven">{{ i.date }}{{ i.time }}</p>
+        </div>
+        <div class="modal-content">
+            <p  class=""  style ="font-size:1rem; width: 15%;display: inline-block;" id = "seven">在{{ i.place }}&nbsp;{{ i.thing }}</p>
+        </div>
+            <div class="modal-content">
+            <p  class=""  style ="font-size:1rem; width: 15%;display: inline-block;" id = "seven">"{{ i.thought }}"</p>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+
+
+
+
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="{% static 'js/materialize.js' %}"></script>
+
+<script>
+    (function($){
+        <!--初始化侧边栏及时差效果初始化-->
+        $(function(){
+
+            $('.button-collapse').sideNav();
+            $('.parallax').parallax();
+
+        }); // end of document ready
+    })(jQuery); // end of jQuery name space
+    <!--模态初始化-->
+    $(document).ready(function(){
+        // .modal-trigger类所在的a标签的href属性必须制定模态框的id才能被触发。
+        $('.modal').modal({
+            dismissible: false, // 点击模态外面模态消失关闭
+            opacity: .5, // 相对于背景的不透明度
+            in_duration: 300, // 显示特效的时间
+            out_duration: 200, // 消失特效时间
+            starting_top: '4%', // 启动时的样式属性
+            ending_top: '10%', // 结束时的样式属性
+
+        });
+        $('.open').on('click', function() {
+            $('#modal1').modal('open');
+        });
+        $('.close').on('click', function() {
+            $('#modal2').modal('close');
+        });
+        <!--初始化下拉菜单-->
+        $(document).ready(function() {
+
+            $('select').material_select();
+
+        });
+        <!--禁用拖动条-->
+        $(".modal").css({
+            "overflow-x":"hidden",
+            "overflow-y":"hidden"
+        });
+        <!--初始化轮播图-->
+        $(document).ready(function(){
+            $('.carousel').carousel();
+        });
+    });
+</script>
+
+<!--底部栏-->
+<footer class="page-footer" style = "float: bottom;position: relative;background:#243B2B;">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">时空珞珈</h5>
+                <p class="grey-text text-lighten-4">关于“珞珈印象”这么一个主题，我们思考了很久：在视觉上经典的绿瓦和牌坊，象征中不变的樱花和东湖水之外，珞珈给予我们的、我们留在珞珈的，究竟是什么？
+                    这一次的网页设计就代表了我们的答案——我们在珞珈的时光</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Made by <h5 style = "display: inline-block;">编程哲学</h5>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
